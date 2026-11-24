@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Herbi Hair | แชมพูสมุนไพร ผมสวยจากธรรมชาติ</title>
+  <meta name="description" content="แชมพูสมุนไพรอัญชันและมิ้นต์ ลดผมร่วง ขจัดรังแค สั่งซื้อง่าย ส่งทั่วไทย">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top">🌿 <span id="shopName">Herbi Hair</span></a>
+    <nav>
+      <a href="#products">สินค้า</a>
+      <a href="#why">จุดเด่น</a>
+      <a href="#order" class="btn btn-sm">สั่งซื้อเลย</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-text">
+        <span class="pill">สมุนไพรไทย 100% · ไม่มีซิลิโคน</span>
+        <h1>ผมสวยแข็งแรง<br>เริ่มจากหนังศีรษะที่ดี</h1>
+        <p>แชมพูสมุนไพรสูตรอ่อนโยน เลือกได้ 2 สูตร ลดผมร่วง หรือขจัดรังแค ใช้ง่าย เห็นผลตั้งแต่ขวดแรก</p>
+        <div class="hero-cta">
+          <a href="#products" class="btn">เลือกสินค้า</a>
+          <span class="hint">ส่งฟรีเมื่อซื้อครบ <b id="freeShipText">400</b> บาท</span>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="images/sh-001.svg" alt="แชมพูอัญชัน">
+        <img src="images/sh-002.svg" alt="แชมพูมิ้นต์" class="second">
+      </div>
+    </div>
+  </section>
+
+  <section id="why" class="why">
+    <div class="wrap grid4">
+      <div class="feat"><div class="ico">🌱</div><h3>สมุนไพรแท้</h3><p>สกัดจากอัญชัน ขิง มิ้นต์ และทีทรี</p></div>
+      <div class="feat"><div class="ico">🧴</div><h3>อ่อนโยน</h3><p>ปราศจากซิลิโคนและพาราเบน</p></div>
+      <div class="feat"><div class="ico">🚚</div><h3>จัดส่งไว</h3><p>แพ็คและส่งภายใน 1-2 วันทำการ</p></div>
+      <div class="feat"><div class="ico">💜</div><h3>รับประกันความพอใจ</h3><p>ไม่พอใจ ติดต่อร้านได้ทันที</p></div>
+    </div>
+  </section>
+
+  <section id="products" class="products">
+    <div class="wrap">
+      <h2>เลือกสูตรที่ใช่สำหรับคุณ</h2>
+      <p class="sub">เลือกจำนวนแล้วเลื่อนลงไปกรอกที่อยู่จัดส่งได้เลย</p>
+      <div id="productGrid" class="pgrid"></div>
+    </div>
+  </section>
+
+  <section id="order" class="order">
+    <div class="wrap order-in">
+      <form id="orderForm" class="card" novalidate>
+        <h2>ข้อมูลจัดส่ง</h2>
+        <div class="field">
+          <label for="name">ชื่อ-นามสกุล *</label>
+          <input id="name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="phone">เบอร์โทรศัพท์ *</label>
+          <input id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="0812345678" required>
+        </div>
+        <div class="field">
+          <label for="address">ที่อยู่ (บ้านเลขที่ ซอย ถนน) *</label>
+          <textarea id="address" name="address" rows="2" autocomplete="street-address" required></textarea>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="subdistrict">ตำบล/แขวง *</label>
+            <input id="subdistrict" name="subdistrict" required>
+          </div>
+          <div class="field">
+            <label for="district">อำเภอ/เขต *</label>
+            <input id="district" name="district" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="province">จังหวัด *</label>
+            <input id="province" name="province" required>
+          </div>
+          <div class="field">
+            <label for="zip">รหัสไปรษณีย์ *</label>
+            <input id="zip" name="zip" inputmode="numeric" maxlength="5" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="note">หมายเหตุ (ถ้ามี)</label>
+          <input id="note" name="note">
+        </div>
+        <p id="formError" class="error" role="alert"></p>
+        <button type="submit" class="btn btn-block" id="submitBtn">ยืนยันสั่งซื้อ (เก็บเงินปลายทาง)</button>
+      </form>
+
+      <aside class="card summary">
+        <h2>สรุปคำสั่งซื้อ</h2>
+        <ul id="summaryList" class="sum-list"></ul>
+        <div class="sum-row"><span>ค่าสินค้า</span><span id="sumSubtotal">฿0</span></div>
+        <div class="sum-row"><span>ค่าจัดส่ง</span><span id="sumShip">฿0</span></div>
+        <div class="sum-row total"><span>ยอดรวม</span><span id="sumTotal">฿0</span></div>
+        <p class="hint" id="shipHint"></p>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="year"></span> <span id="shopName2">Herbi Hair</span> · สั่งซื้อผ่านเว็บไซต์ ชำระเงินปลายทาง</p>
+    <p><a href="admin.html">สำหรับแอดมิน</a></p>
+  </div>
+</footer>
+
+<div id="successModal" class="modal" hidden>
+  <div class="modal-box">
+    <div class="check">✓</div>
+    <h2>สั่งซื้อสำเร็จ</h2>
+    <p>หมายเลขคำสั่งซื้อของคุณ</p>
+    <div class="oid" id="successId"></div>
+    <p class="hint">ทางร้านจะติดต่อกลับเพื่อยืนยันและจัดส่งภายใน 1-2 วันทำการ</p>
+    <button class="btn btn-block" id="closeModal">ปิด</button>
+  </div>
+</div>
+
+<script src="products.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

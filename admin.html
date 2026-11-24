@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>แอดมิน | หยิบสินค้าและพิมพ์ใบจ่าหน้า</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#241a3d;--muted:#6b6485;--brand:#6d4fc7;--brand-d:#4a3290;--line:#e6e0f5;--bg:#faf8ff}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Noto Sans Thai",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+    .wrap{max-width:1000px;margin:0 auto;padding:20px}
+    h1{font-size:1.4rem;color:var(--brand-d)}
+    h2{font-size:1.1rem;margin:22px 0 10px;color:var(--brand-d)}
+    .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+    .muted{color:var(--muted);font-size:.9rem}
+    .btn{background:var(--brand);color:#fff;border:0;border-radius:999px;padding:9px 20px;font:600 .92rem inherit;font-family:inherit;cursor:pointer}
+    .btn:hover{background:var(--brand-d)}
+    .btn.ghost{background:#fff;color:var(--brand-d);border:1.5px solid var(--line)}
+    .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+    select{border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit;background:#fff}
+    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+    .ord{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start}
+    .ord input{width:20px;height:20px;margin-top:4px}
+    .oid{font-weight:700;color:var(--brand-d)}
+    .badge{display:inline-block;border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:600;background:#efe9fd;color:var(--brand-d)}
+    .badge.done{background:#dff5ec;color:#0b7556}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+    th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:.93rem}
+    th{background:#f4f0fd}
+    td img{width:48px;height:48px;object-fit:cover;border-radius:8px;vertical-align:middle}
+    td.q{font-size:1.2rem;font-weight:700;color:var(--brand-d)}
+    #msg{margin:8px 0;color:#c8323c}
+
+    /* ---- ใบจ่าหน้าพัสดุ ---- */
+    #labels{display:none}
+    .label{width:100mm;height:150mm;border:2px solid #000;padding:6mm;margin:0 auto 6mm;page-break-after:always;break-after:page;color:#000;font-size:11pt;display:flex;flex-direction:column;background:#fff}
+    .label .from{font-size:9.5pt;border-bottom:1.5px dashed #000;padding-bottom:3mm}
+    .label .to{flex:1;padding-top:4mm}
+    .label .to .t{font-size:9pt;color:#444}
+    .label .to .n{font-size:17pt;font-weight:700;margin:1mm 0}
+    .label .to .ph{font-size:13pt;font-weight:600}
+    .label .to .ad{font-size:12.5pt;margin-top:2mm}
+    .label .zip{font-size:22pt;font-weight:700;letter-spacing:3px;margin-top:3mm}
+    .label .items{border-top:1.5px dashed #000;padding-top:3mm;font-size:10pt}
+    .label .cod{margin-top:3mm;border:2px solid #000;padding:2mm 3mm;display:flex;justify-content:space-between;font-weight:700;font-size:13pt}
+    .label .no{font-size:9pt;margin-top:2mm;text-align:right}
+
+    /* ---- ใบหยิบสินค้า (พิมพ์) ---- */
+    #picksheet{display:none}
+    @media print{
+      @page{margin:6mm}
+      body{background:#fff}
+      .wrap{display:none}
+      body.p-labels #labels{display:block}
+      body.p-pick #picksheet{display:block;padding:8mm}
+      body.p-pick #picksheet table{font-size:12pt}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>หลังบ้าน · หยิบสินค้าและพิมพ์ใบจ่าหน้า</h1>
+    <div><a href="index.html" class="muted">← กลับหน้าร้าน</a></div>
+  </div>
+  <p class="muted" id="modeText"></p>
+  <p id="msg"></p>
+
+  <div class="bar">
+    <select id="filter">
+      <option value="ใหม่">ออเดอร์ใหม่ (รอหยิบ)</option>
+      <option value="แพ็คแล้ว">แพ็คแล้ว</option>
+      <option value="">ทั้งหมด</option>
+    </select>
+    <button class="btn ghost" id="refresh">รีเฟรช</button>
+    <button class="btn ghost" id="selAll">เลือกทั้งหมด</button>
+    <span style="flex:1"></span>
+    <button class="btn" id="printPick">🖨 พิมพ์ใบหยิบสินค้า</button>
+    <button class="btn" id="printLabels">🏷 พิมพ์ใบจ่าหน้าพัสดุ</button>
+    <button class="btn ghost" id="markDone">ทำเครื่องหมาย "แพ็คแล้ว"</button>
+  </div>
+
+  <h2>สรุปที่ต้องหยิบ (เฉพาะออเดอร์ที่เลือก)</h2>
+  <div id="pickBox"></div>
+
+  <h2>รายการออเดอร์</h2>
+  <div id="orders"></div>
+</div>
+
+<div id="labels"></div>
+<div id="picksheet"></div>
+
+<script src="products.js"></script>
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const baht = n => "฿" + Number(n).toLocaleString("th-TH");
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  let rows = [];
+  const selected = new Set();
+  const demo = !CONFIG.SCRIPT_URL;
+  let key = sessionStorage.getItem("hh_key") || "";
+
+  $("#modeText").textContent = demo
+    ? "โหมดทดลอง: แสดงออเดอร์ที่สั่งจากเบราว์เซอร์เครื่องนี้ (ยังไม่ได้เชื่อม Google Sheet)"
+    : "เชื่อมต่อ Google Sheet แล้ว";
+
+  async function api(params){
+    const u = new URL(CONFIG.SCRIPT_URL);
+    Object.entries(params).forEach(([k,v]) => u.searchParams.set(k, v));
+    const r = await fetch(u.toString());
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.error || "error");
+    return j;
+  }
+
+  async function load(){
+    $("#msg").textContent = "";
+    try{
+      if (demo){
+        rows = JSON.parse(localStorage.getItem("hh_orders") || "[]");
+      } else {
+        if (!key){ key = prompt("ใส่รหัสแอดมิน (ADMIN_KEY)") || ""; sessionStorage.setItem("hh_key", key); }
+        rows = (await api({action:"list", key})).orders;
+      }
+    }catch(e){
+      $("#msg").textContent = "โหลดข้อมูลไม่สำเร็จ: " + e.message + (e.message === "unauthorized" ? " (รหัสไม่ถูกต้อง)" : "");
+      sessionStorage.removeItem("hh_key"); key = "";
+      rows = [];
+    }
+    render();
+  }
+
+  function groups(){
+    const f = $("#filter").value;
+    const map = new Map();
+    rows.forEach(r => {
+      if (f && r.status !== f) return;
+      if (!map.has(r.orderId)) map.set(r.orderId, {...r, items: []});
+      map.get(r.orderId).items.push(r);
+    });
+    return [...map.values()].sort((a,b) => String(b.timestamp).localeCompare(String(a.timestamp)));
+  }
+
+  function render(){
+    const gs = groups();
+    [...selected].forEach(id => { if (!gs.find(g => g.orderId === id)) selected.delete(id); });
+    $("#orders").innerHTML = gs.length ? gs.map(g => `
+      <div class="card ord">
+        <input type="checkbox" data-id="${esc(g.orderId)}" ${selected.has(g.orderId) ? "checked" : ""}>
+        <div>
+          <span class="oid">${esc(g.orderId)}</span>
+          <span class="badge ${g.status === "ใหม่" ? "" : "done"}">${esc(g.status)}</span>
+          <div class="muted">${new Date(g.timestamp).toLocaleString("th-TH")}</div>
+          <div><b>${esc(g.name)}</b> · ${esc(g.phone)}</div>
+          <div class="muted">${esc(g.address)} ${esc(g.subdistrict)} ${esc(g.district)} ${esc(g.province)} ${esc(g.zip)}</div>
+          <div>${g.items.map(i => `${esc(i.product)} × ${i.qty}`).join(" · ")}</div>
+          ${g.note ? `<div class="muted">หมายเหตุ: ${esc(g.note)}</div>` : ""}
+        </div>
+        <b>${baht(g.orderTotal)}</b>
+      </div>`).join("") : '<p class="muted">ไม่มีออเดอร์ในสถานะนี้</p>';
+    renderPick();
+  }
+
+  function selectedGroups(){ return groups().filter(g => selected.has(g.orderId)); }
+
+  function pickRows(){
+    const m = new Map();
+    selectedGroups().forEach(g => g.items.forEach(i => {
+      const cur = m.get(i.sku) || {sku:i.sku, product:i.product, image:i.image, qty:0};
+      cur.qty += i.qty; m.set(i.sku, cur);
+    }));
+    return [...m.values()].sort((a,b) => a.sku.localeCompare(b.sku));
+  }
+
+  function pickTable(withImg){
+    const p = pickRows();
+    if (!p.length) return '<p class="muted">ติ๊กเลือกออเดอร์ด้านล่างเพื่อดูยอดที่ต้องหยิบ</p>';
+    const total = p.reduce((s,x) => s + x.qty, 0);
+    return `<table><thead><tr><th>SKU</th>${withImg?"<th></th>":""}<th>สินค้า</th><th>จำนวนที่ต้องหยิบ</th></tr></thead><tbody>
+      ${p.map(x => `<tr><td>${esc(x.sku)}</td>${withImg?`<td><img src="${esc(x.image)}" alt=""></td>`:""}<td>${esc(x.product)}</td><td class="q">${x.qty}</td></tr>`).join("")}
+      <tr><td colspan="${withImg?3:2}"><b>รวม</b></td><td class="q">${total}</td></tr></tbody></table>
+      <p class="muted" style="margin-top:6px">จำนวนออเดอร์: ${selectedGroups().length}</p>`;
+  }
+  function renderPick(){ $("#pickBox").innerHTML = pickTable(true); }
+
+  function labelsHtml(){
+    const S = CONFIG.SENDER;
+    return selectedGroups().map(g => `
+      <div class="label">
+        <div class="from"><b>ผู้ส่ง:</b> ${esc(S.name)} โทร ${esc(S.phone)}<br>${esc(S.address)}</div>
+        <div class="to">
+          <div class="t">ผู้รับ</div>
+          <div class="n">${esc(g.name)}</div>
+          <div class="ph">โทร ${esc(g.phone)}</div>
+          <div class="ad">${esc(g.address)}<br>ต.${esc(g.subdistrict)} อ.${esc(g.district)}<br>จ.${esc(g.province)}</div>
+          <div class="zip">${esc(g.zip)}</div>
+          ${g.note ? `<div class="t" style="margin-top:2mm">หมายเหตุ: ${esc(g.note)}</div>` : ""}
+        </div>
+        <div class="items"><b>สินค้า:</b> ${g.items.map(i => `${esc(i.sku)} × ${i.qty}`).join(", ")}</div>
+        <div class="cod"><span>เก็บเงินปลายทาง (COD)</span><span>${baht(g.orderTotal)}</span></div>
+        <div class="no">เลขที่ออเดอร์ ${esc(g.orderId)}</div>
+      </div>`).join("");
+  }
+
+  function doPrint(mode, html){
+    if (!selectedGroups().length){ alert("กรุณาติ๊กเลือกออเดอร์ก่อน"); return; }
+    document.body.className = mode;
+    if (mode === "p-labels") $("#labels").innerHTML = html; else $("#picksheet").innerHTML = html;
+    window.print();
+    setTimeout(() => document.body.className = "", 500);
+  }
+
+  $("#orders").addEventListener("change", e => {
+    const id = e.target.dataset.id; if (!id) return;
+    e.target.checked ? selected.add(id) : selected.delete(id);
+    renderPick();
+  });
+  $("#filter").addEventListener("change", () => { selected.clear(); render(); });
+  $("#refresh").addEventListener("click", load);
+  $("#selAll").addEventListener("click", () => { groups().forEach(g => selected.add(g.orderId)); render(); });
+  $("#printLabels").addEventListener("click", () => doPrint("p-labels", labelsHtml()));
+  $("#printPick").addEventListener("click", () => doPrint("p-pick", "<h2>ใบหยิบสินค้า</h2>" + pickTable(false)));
+  $("#markDone").addEventListener("click", async () => {
+    const ids = [...selected];
+    if (!ids.length){ alert("กรุณาติ๊กเลือกออเดอร์ก่อน"); return; }
+    try{
+      if (demo){
+        rows.forEach(r => { if (ids.includes(r.orderId)) r.status = "แพ็คแล้ว"; });
+        localStorage.setItem("hh_orders", JSON.stringify(rows));
+      } else {
+        await api({action:"status", key, orderIds: ids.join(","), status:"แพ็คแล้ว"});
+      }
+      selected.clear(); await load();
+    }catch(e){ $("#msg").textContent = "อัปเดตสถานะไม่สำเร็จ: " + e.message; }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

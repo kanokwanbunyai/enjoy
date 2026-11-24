@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ede7fb"/>
+      <stop offset="1" stop-color="#d9cdf6"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5b3fa8"/>
+      <stop offset="0.45" stop-color="#7d5fd0"/>
+      <stop offset="1" stop-color="#4a3290"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="480" fill="url(#bg)"/>
+  <ellipse cx="200" cy="440" rx="110" ry="14" fill="#2b1d5a" opacity="0.18"/>
+  <rect x="170" y="40" width="60" height="38" rx="8" fill="#2f2063"/>
+  <rect x="178" y="22" width="44" height="26" rx="6" fill="#3d2a7d"/>
+  <rect x="186" y="12" width="48" height="12" rx="5" fill="#2f2063"/>
+  <rect x="180" y="74" width="40" height="22" fill="#4a3290"/>
+  <path d="M120 120 Q120 96 150 96 L250 96 Q280 96 280 120 L284 420 Q284 438 262 438 L138 438 Q116 438 116 420 Z" fill="url(#body)"/>
+  <path d="M138 130 L146 420" stroke="#fff" stroke-opacity="0.22" stroke-width="8" stroke-linecap="round"/>
+  <rect x="134" y="190" width="132" height="170" rx="14" fill="#fbf9ff"/>
+  <text x="200" y="224" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#4a3290" letter-spacing="2">HERBI HAIR</text>
+  <circle cx="200" cy="268" r="26" fill="#7d5fd0"/>
+  <path d="M200 250 C188 262 188 276 200 286 C212 276 212 262 200 250 Z" fill="#fbf9ff"/>
+  <path d="M200 258 L200 288" stroke="#7d5fd0" stroke-width="2"/>
+  <text x="200" y="322" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#2f2063">BUTTERFLY PEA</text>
+  <text x="200" y="342" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#6b5a9e">Anti Hair Fall · 250 ml</text>
+</svg>

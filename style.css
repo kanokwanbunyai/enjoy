@@ -1,0 +1,101 @@
+:root{
+  --ink:#241a3d; --muted:#6b6485; --bg:#faf8ff; --card:#fff;
+  --brand:#6d4fc7; --brand-d:#4a3290; --mint:#27b88c; --line:#e6e0f5; --err:#c8323c;
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans Thai",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+.nav{position:sticky;top:0;z-index:20;background:rgba(250,248,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:700;font-size:1.15rem;color:var(--brand-d)}
+.nav nav{display:flex;align-items:center;gap:20px;font-size:.95rem}
+.nav nav a:not(.btn):hover{color:var(--brand)}
+
+.btn{display:inline-block;background:var(--brand);color:#fff;border:0;border-radius:999px;padding:12px 28px;font:600 1rem/1.2 inherit;font-family:inherit;cursor:pointer;transition:.15s;text-align:center}
+.btn:hover{background:var(--brand-d);transform:translateY(-1px)}
+.btn:disabled{opacity:.6;cursor:wait;transform:none}
+.btn-sm{padding:8px 18px;font-size:.9rem}
+.btn-block{display:block;width:100%}
+
+.hero{background:linear-gradient(160deg,#efe9fd 0%,#e4f6ee 100%);padding:56px 0 64px}
+.hero-in{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.pill{display:inline-block;background:#fff;color:var(--brand-d);border-radius:999px;padding:4px 14px;font-size:.85rem;font-weight:500;margin-bottom:16px}
+.hero h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.2;color:var(--brand-d);margin-bottom:14px}
+.hero p{color:var(--muted);font-size:1.05rem;max-width:30em}
+.hero-cta{display:flex;align-items:center;gap:18px;margin-top:26px;flex-wrap:wrap}
+.hint{color:var(--muted);font-size:.9rem}
+.hero-img{position:relative;height:340px}
+.hero-img img{position:absolute;width:52%;border-radius:20px;box-shadow:0 18px 40px rgba(60,40,120,.22)}
+.hero-img img:first-child{left:4%;top:0;transform:rotate(-4deg)}
+.hero-img img.second{right:2%;bottom:0;transform:rotate(5deg)}
+
+.why{padding:44px 0}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 18px;text-align:center}
+.feat .ico{font-size:1.9rem}
+.feat h3{margin:6px 0 2px;font-size:1.02rem}
+.feat p{color:var(--muted);font-size:.9rem}
+
+.products{padding:24px 0 56px}
+h2{font-size:1.6rem;color:var(--brand-d)}
+.sub{color:var(--muted);margin:4px 0 26px}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.pcard{background:var(--card);border:2px solid var(--line);border-radius:20px;overflow:hidden;transition:.15s}
+.pcard.active{border-color:var(--brand);box-shadow:0 10px 30px rgba(109,79,199,.16)}
+.pimg{position:relative}
+.pimg img{width:100%;aspect-ratio:5/4;object-fit:cover}
+.ptag{position:absolute;top:12px;left:12px;background:var(--brand);color:#fff;font-size:.8rem;padding:2px 12px;border-radius:999px}
+.pbody{padding:18px 20px 22px}
+.psku{color:var(--muted);font-size:.8rem;letter-spacing:.04em}
+.pbody h3{font-size:1.2rem;margin:2px 0 4px}
+.pbody p{color:var(--muted);font-size:.93rem;min-height:3.2em}
+.pfoot{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.price{font-size:1.5rem;font-weight:700;color:var(--brand-d)}
+.price small{font-size:.8rem;font-weight:400;color:var(--muted)}
+.qty{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.qty button{width:38px;height:38px;border:0;background:#f4f0fd;font-size:1.2rem;cursor:pointer;color:var(--brand-d)}
+.qty button:hover{background:#e6ddfa}
+.qty span{min-width:38px;text-align:center;font-weight:600}
+
+.order{padding:8px 0 64px}
+.order-in{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}
+.card h2{margin-bottom:16px}
+.field{margin-bottom:14px;flex:1}
+.row{display:flex;gap:14px}
+label{display:block;font-size:.88rem;font-weight:500;margin-bottom:4px}
+input,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;font:inherit;background:#fdfcff;transition:.15s}
+input:focus,textarea:focus{outline:0;border-color:var(--brand);box-shadow:0 0 0 3px rgba(109,79,199,.15)}
+.invalid{border-color:var(--err)!important}
+.error{color:var(--err);font-size:.9rem;min-height:1.4em;margin-bottom:6px}
+.summary{position:sticky;top:76px}
+.sum-list{list-style:none;margin-bottom:12px}
+.sum-list li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.93rem}
+.sum-list .empty{color:var(--muted);border:0}
+.sum-row{display:flex;justify-content:space-between;padding:4px 0}
+.sum-row.total{font-size:1.25rem;font-weight:700;color:var(--brand-d);border-top:2px solid var(--line);margin-top:8px;padding-top:12px}
+.summary .hint{margin-top:10px}
+
+footer{background:#241a3d;color:#cfc7ea;text-align:center;padding:28px 0;font-size:.9rem}
+footer a{text-decoration:underline;opacity:.8}
+
+.modal{position:fixed;inset:0;background:rgba(36,26,61,.55);display:grid;place-items:center;z-index:50;padding:20px}
+.modal[hidden]{display:none}
+.modal-box{background:#fff;border-radius:24px;padding:32px 28px;max-width:400px;width:100%;text-align:center}
+.check{width:64px;height:64px;border-radius:50%;background:var(--mint);color:#fff;font-size:2rem;display:grid;place-items:center;margin:0 auto 12px}
+.oid{font-size:1.6rem;font-weight:700;color:var(--brand-d);background:#f4f0fd;border-radius:12px;padding:8px;margin:8px 0 12px;letter-spacing:.04em}
+.modal-box .btn{margin-top:16px}
+
+@media(max-width:820px){
+  .hero-in,.order-in,.pgrid{grid-template-columns:1fr}
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .hero-img{height:280px}
+  .summary{position:static;order:-1}
+  .row{flex-direction:column;gap:0}
+  .nav nav a:not(.btn){display:none}
+}
