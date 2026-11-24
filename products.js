@@ -5,7 +5,7 @@ const CONFIG = {
   SHOP_NAME: "Herbi Hair",
   // วาง URL ของ Google Apps Script (Web app) ที่ได้หลัง Deploy ตรงนี้
   // ถ้าปล่อยว่าง เว็บจะทำงานโหมดทดลอง (เก็บออเดอร์ในเบราว์เซอร์เครื่องนี้)
-  SCRIPT_URL: "",
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbywk17AEs13CsSGusmTIdlbrJoocp5geRtfHhuubp4ZuDJBUKfbI4kp_u2sPLOD0O6G8w/exec",
   SHIPPING_FEE: 40,
   FREE_SHIPPING_OVER: 400,
   // ข้อมูลผู้ส่ง (แสดงบนใบจ่าหน้าพัสดุ)
